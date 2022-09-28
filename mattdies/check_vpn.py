@@ -54,6 +54,15 @@ class VPN():
         self.ip_address = mullvad_status["ip"]
 
 
+    def is_connected(self) -> bool:
+        """Returns a bool for if the VPN is connected.
+
+        Returns:
+            bool: A bool for if the VPN is connected.
+        """
+        return self.connected
+
+
 def check_vpn_status() -> bool:
     """Checks the VPN connection status.
 
@@ -64,7 +73,7 @@ def check_vpn_status() -> bool:
         bool: A boolean representing whether the VPN is connected.
     """
     vpn = VPN()
-    if not vpn.connected:
+    if not vpn.is_connected():
         raise NotConnectedError("Not connected to the Mullvad VPN!")
     logger.info("VPN connected! IP address: %s", vpn.ip_address)
     return True
