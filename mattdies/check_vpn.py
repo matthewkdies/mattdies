@@ -7,6 +7,7 @@ from pathlib import Path
 
 from gen_funcs import path_parents  # pylint: disable=import-error
 
+logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
