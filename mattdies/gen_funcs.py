@@ -13,4 +13,16 @@ def path_parents(path: Path) -> list[Path]:
         list[Path]: A list of the path object's parents.
     """
     return list(path.parents)
-    
+
+
+def get_login() -> tuple[str, str]:
+    """Gets system user and pwd.
+
+    Returns:
+        tuple[str, str]: System user and pwd.
+    """
+    with Path("secrets/user").open("r",encoding="utf-8") as pwd_infile:
+        user = pwd_infile.read()
+    with Path("secrets/pwd").open("r",encoding="utf-8") as pwd_infile:
+        pwd = pwd_infile.read()
+    return user, pwd

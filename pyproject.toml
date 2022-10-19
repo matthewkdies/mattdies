@@ -2,11 +2,12 @@
 name = "mattdies"
 version = "0.1.0"
 description = "My personal collection of useful code."
-authors = ["Matt Dies matthewkdies@gmail.com"]
+authors = ["Matt Dies <matthewkdies@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+qbittorrent-api = "^2022.8.38"
 
 
 [build-system]
