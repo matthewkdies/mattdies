@@ -5,6 +5,7 @@ import logging
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 
 from gen_funcs import path_parents  # pylint: disable=import-error
 
@@ -44,13 +45,35 @@ class VPN():
             return infile.read()
 
 
+    def connect(self) -> bool:
+        """Connects the VPN."""
+        subprocess.run("/home/matthewkdies/vpn_on.sh", check=True, shell=True)
+        self.connected = True
+
+
+    def disconnect(self) -> bool:
+        """Disconnects the VPN."""
+        subprocess.run("/home/matthewkdies/vpn_off.sh", check=True, shell=True)
+        self.connected = False
+
+
     def __post_init__(self):
         """Checks the VPN connection status."""
-        mullvad_status = self.get_mullvad_status_json()
-        vpn_hostname = self.get_vpn_hostname()
-        exit_ip = bool(mullvad_status["mullvad_exit_ip"])
-        exit_ip_hostname = mullvad_status["mullvad_exit_ip_hostname"] == vpn_hostname
+        self.connected = False
+        try:
+            mullvad_status = self.get_mullvad_status_json()
+            vpn_hostname = self.get_vpn_hostname()
+            exit_ip = bool(mullvad_status["mullvad_exit_ip"])
+            exit_ip_hostname = mullvad_status["mullvad_exit_ip_hostname"] == vpn_hostname
+        except KeyError:
+            self.connect()
+            mullvad_status = self.get_mullvad_status_json()
+            vpn_hostname = self.get_vpn_hostname()
+            exit_ip = bool(mullvad_status["mullvad_exit_ip"])
+            exit_ip_hostname = mullvad_status["mullvad_exit_ip_hostname"] == vpn_hostname 
         self.connected = exit_ip and exit_ip_hostname
+        if not self.connected:
+            raise NotConnectedError("Not connected to the Mullvad VPN!")
         self.ip_address = mullvad_status["ip"]
 
 
@@ -63,7 +86,7 @@ class VPN():
         return self.connected
 
 
-def check_vpn_status() -> bool:
+def check_vpn_status(vpn: Optional[VPN] = None) -> bool:
     """Checks the VPN connection status.
 
     Raises:
@@ -72,7 +95,8 @@ def check_vpn_status() -> bool:
     Returns:
         bool: A boolean representing whether the VPN is connected.
     """
-    vpn = VPN()
+    if not vpn:
+        vpn = VPN()
     if not vpn.is_connected():
         raise NotConnectedError("Not connected to the Mullvad VPN!")
     logger.info("VPN connected! IP address: %s", vpn.ip_address)
