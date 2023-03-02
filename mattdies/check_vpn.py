@@ -99,7 +99,7 @@ def check_vpn_status(vpn: Optional[VPN] = None) -> bool:
         vpn = VPN()
     if not vpn.is_connected():
         raise NotConnectedError("Not connected to the Mullvad VPN!")
-    logger.info("VPN connected! IP address: %s", vpn.ip_address)
+    logger.debug("VPN connected! IP address: %s", vpn.ip_address)
     return True
 
 
