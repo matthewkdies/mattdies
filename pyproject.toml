@@ -7,8 +7,19 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-qbittorrent-api = "^2022.8.38"
 
+
+[tool.poetry.group.downloads.dependencies]
+qbittorrent-api = "^2023.2.43"
+
+
+[tool.poetry.group.subs.dependencies]
+requests-cache = "^1.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.12.0"
+black = "^23.1.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -21,3 +32,11 @@ disable = [
     "C0114", # missing-module-docstring
     "W0105", # pointless-string-statement
 ]
+
+[tool.isort]
+multi_line_output = 3
+line_length = 88
+include_trailing_comma = true
+
+[tool.black]
+line_length = 88
