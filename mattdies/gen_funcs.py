@@ -21,8 +21,8 @@ def get_login() -> tuple[str, str]:
     Returns:
         tuple[str, str]: System user and pwd.
     """
-    with Path("secrets/user").open("r",encoding="utf-8") as pwd_infile:
-        user = pwd_infile.read()
-    with Path("secrets/pwd").open("r",encoding="utf-8") as pwd_infile:
-        pwd = pwd_infile.read()
+    with Path("secrets/system").open("r",encoding="utf-8") as system_infile:
+        lines = [line.strip() for line in system_infile.readlines()]
+    user, pwd = lines[0], lines[1]
     return user, pwd
+    
