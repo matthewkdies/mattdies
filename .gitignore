@@ -2,3 +2,4 @@ secrets
 __pycache__
 mattdies/resume_downloads.py
 **/*.sqlite
+.vscode
