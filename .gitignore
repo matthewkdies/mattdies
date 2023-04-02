@@ -3,5 +3,5 @@ __pycache__
 mattdies/resume_downloads.py
 **/*.sqlite
 .vscode
-.DS_Code
+.DS_Store
 .devcontainer.
