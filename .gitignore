@@ -4,4 +4,4 @@ mattdies/resume_downloads.py
 **/*.sqlite
 .vscode
 .DS_Store
-.devcontainer.
+.devcontainer
