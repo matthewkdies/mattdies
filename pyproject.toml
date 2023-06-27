@@ -17,8 +17,6 @@ qbittorrent-api = "^2023.2.43"
 requests-cache = "^1.0.0"
 
 
-[tool.poetry.group.dev.dependencies]
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
