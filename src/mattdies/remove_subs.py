@@ -26,7 +26,8 @@ def get_movies(parsed_movies_path: Path) -> list(Path):
     movies = []
     for movie_dir in MOVIE_DIRS:
         for movie in movie_dir.glob("**/*.mkv"):
-            if movie not in parsed_movies:
+            movie_str = str(movie)
+            if movie_str not in parsed_movies and "#recycle" not in movie_str:
                 movies.append(movie.absolute())
     return movies
 
@@ -37,7 +38,8 @@ def get_tv_episodes(parsed_eps_path: Path) -> list(Path):
     tv_episodes = []
     for tv_show_dir in TV_SHOW_DIRS:
         for tv_episode in tv_show_dir.glob("**/*.mkv"):
-            if tv_episode not in parsed_eps:
+            ep_str = str(tv_episode)
+            if tv_episode not in parsed_eps and "#recycle" not in ep_str:
                 tv_episodes.append(tv_episode.absolute())
     return tv_episodes
 
